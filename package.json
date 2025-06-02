@@ -1,0 +1,21 @@
+{
+  "name": "presetup",
+  "type": "module",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/react": "^4.3.0",
+    "@types/react": "^19.1.6",
+    "@types/react-dom": "^19.1.5",
+    "astro": "^5.8.1",
+    "emoji-picker-react": "^4.12.2",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "yaml": "^2.8.0"
+  }
+}
