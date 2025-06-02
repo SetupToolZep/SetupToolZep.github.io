@@ -28,7 +28,7 @@ export default function YamlDisplay({ config }) {
   return (
     <div className="yaml-display">
       <div className="yaml-header">
-        <h3>Configuración YAML Generada</h3>
+        <h3>Configuration</h3>
         <button
           onClick={copyToClipboard}
           className={`copy-button ${copied ? "copied" : ""}`}
@@ -36,11 +36,11 @@ export default function YamlDisplay({ config }) {
         >
           {copied ? (
             <>
-              <i className="fas fa-check"></i> Copiado!
+              <i className="fas fa-check"></i> Copied!
             </>
           ) : (
             <>
-              <i className="fas fa-copy"></i> Copiar Configuración
+              <i className="fas fa-copy"></i> Copy
             </>
           )}
         </button>

@@ -223,7 +223,7 @@ export default function ConfigurablePlugins({ config, setConfig }) {
           </div>
 
           <div className="form-group">
-            <label>Color HEX</label>
+            <label>HEX Color</label>
             <div className="color-input-group">
               <input
                 type="text"
