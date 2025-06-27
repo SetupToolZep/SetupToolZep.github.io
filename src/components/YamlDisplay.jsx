@@ -1,11 +1,27 @@
-import React, { useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import hljs from "highlight.js/lib/core";
+import yaml from "highlight.js/lib/languages/yaml";
+import "highlight.js/styles/atom-one-dark-reasonable.css";
 import { generateYaml } from "../utils/yamlGenerator";
+
+hljs.registerLanguage("yaml", yaml);
 
 export default function YamlDisplay({ config }) {
   const [copied, setCopied] = useState(false);
-  const yamlText = generateYaml(config);
+  const [highlightedHtml, setHighlightedHtml] = useState("");
+  const codeRef = useRef(null);
+
+  useEffect(() => {
+    const yamlText = generateYaml(config);
+    const tempElement = document.createElement("code");
+    tempElement.className = "language-yaml";
+    tempElement.textContent = yamlText;
+    hljs.highlightElement(tempElement);
+    setHighlightedHtml(tempElement.innerHTML);
+  }, [config]);
 
   const copyToClipboard = () => {
+    const yamlText = generateYaml(config);
     navigator.clipboard
       .writeText(yamlText)
       .then(() => {
@@ -32,7 +48,6 @@ export default function YamlDisplay({ config }) {
         <button
           onClick={copyToClipboard}
           className={`copy-button ${copied ? "copied" : ""}`}
-          disabled={!yamlText}
         >
           {copied ? (
             <>
@@ -45,7 +60,13 @@ export default function YamlDisplay({ config }) {
           )}
         </button>
       </div>
-      <pre>{yamlText}</pre>
+      <pre>
+        <code
+          ref={codeRef}
+          className="language-yaml"
+          dangerouslySetInnerHTML={{ __html: highlightedHtml }}
+        />
+      </pre>
     </div>
   );
 }
