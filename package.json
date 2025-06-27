@@ -14,6 +14,7 @@
     "@types/react-dom": "^19.1.5",
     "astro": "^5.8.1",
     "emoji-picker-react": "^4.12.2",
+    "highlight.js": "^11.11.1",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "yaml": "^2.8.0"
