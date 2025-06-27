@@ -149,23 +149,28 @@ export default function ConfigurablePlugins({ config, setConfig }) {
           <div className="form-group">
             <label>Notification Type</label>
             <div className="radio-group">
-              <label className="radio-option">
-                <input
-                  type="radio"
-                  checked={welcomeType === "dm"}
-                  onChange={() => handleWelcomeTypeChange("dm")}
-                />
-                DM Message
-              </label>
-              <label className="radio-option">
-                <input
-                  type="radio"
-                  checked={welcomeType === "channel"}
-                  onChange={() => handleWelcomeTypeChange("channel")}
-                />
-                Message in Channel
-              </label>
-            </div>
+  <label className="custom-radio">
+    <input
+      type="radio"
+      checked={welcomeType === "dm"}
+      onChange={() => handleWelcomeTypeChange("dm")}
+      className="styled-radio"
+    />
+    <span className="radio-circle"></span>
+    DM Message
+  </label>
+
+  <label className="custom-radio">
+    <input
+      type="radio"
+      checked={welcomeType === "channel"}
+      onChange={() => handleWelcomeTypeChange("channel")}
+      className="styled-radio"
+    />
+    <span className="radio-circle"></span>
+    Message in Channel
+  </label>
+</div>
           </div>
 
           {welcomeType === "channel" && (

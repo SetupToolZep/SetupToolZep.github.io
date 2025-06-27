@@ -118,23 +118,28 @@ export default function ModerationPlugins({ config, setConfig }) {
         <div className="sub-section">
           <h4 className="sub-title">Notification Type</h4>
           <div className="radio-group">
-            <label>
-              <input
-                type="radio"
-                checked={actionType === "dm"}
-                onChange={() => handleActionTypeChange("dm")}
-              />
-              DM on Action
-            </label>
-            <label>
-              <input
-                type="radio"
-                checked={actionType === "message"}
-                onChange={() => handleActionTypeChange("message")}
-              />
-              Message on Action
-            </label>
-          </div>
+  <label className="custom-radio">
+    <input
+      type="radio"
+      checked={actionType === "dm"}
+      onChange={() => handleActionTypeChange("dm")}
+      className="styled-radio"
+    />
+    <span className="radio-circle"></span>
+    DM on Action
+  </label>
+
+  <label className="custom-radio">
+    <input
+      type="radio"
+      checked={actionType === "message"}
+      onChange={() => handleActionTypeChange("message")}
+      className="styled-radio"
+    />
+    <span className="radio-circle"></span>
+    Message on Action
+  </label>
+</div>
 
           {actionType === "message" && (
             <div className="form-group">

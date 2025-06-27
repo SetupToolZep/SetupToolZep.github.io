@@ -26,15 +26,16 @@ export default function DefaultPlugins({ config, setConfig }) {
       <div className="plugin-content">
         <div className="plugins-grid">
           {defaultPlugins.map((plugin) => (
-            <label key={plugin} className="plugin-option">
-              <input
-                type="checkbox"
-                checked={config.plugins[plugin] || false}
-                onChange={() => handleToggle(plugin)}
-                className="plugin-checkbox"
-              />
-              <span className="plugin-label">{plugin}</span>
-            </label>
+            <label key={plugin} className="custom-checkbox plugin-option">
+  <input
+    type="checkbox"
+    checked={config.plugins[plugin] || false}
+    onChange={() => handleToggle(plugin)}
+    className="styled-checkbox"
+  />
+  <span className="checkmark"></span>
+  <span className="plugin-label">{plugin}</span>
+</label>
           ))}
         </div>
       </div>

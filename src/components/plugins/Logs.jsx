@@ -110,22 +110,21 @@ export default function LogsPlugins({ config, setConfig }) {
                 <label>Event Groups</label>
                 <div className="event-groups-grid">
                   {allGroups.map((group) => (
-                    <label key={group} className="event-group">
-                      <input
-                        type="checkbox"
-                        checked={getSelectedGroupsForChannel(
-                          channelId
-                        ).includes(group)}
-                        onChange={() => toggleGroupForChannel(channelId, group)}
-                        className="event-checkbox"
-                      />
-                      <span className="event-label">
-                        {group}{" "}
-                        <span className="event-count">
-                          ({EVENT_GROUPS[group].length} events)
-                        </span>
-                      </span>
-                    </label>
+                    <label key={group} className="custom-checkbox event-group">
+  <input
+    type="checkbox"
+    checked={getSelectedGroupsForChannel(channelId).includes(group)}
+    onChange={() => toggleGroupForChannel(channelId, group)}
+    className="styled-checkbox"
+  />
+  <span className="checkmark"></span>
+  <span className="event-label">
+    {group}{" "}
+    <span className="event-count">
+      ({EVENT_GROUPS[group].length} events)
+    </span>
+  </span>
+</label>
                   ))}
                 </div>
               </div>
