@@ -1,14 +1,12 @@
 import YAML from "yaml";
 
 export function generateYaml(config) {
-  // 1. Crear estructura base del YAML
   const yamlObject = {
     prefix: config.prefix,
     levels: config.levels,
     plugins: {},
   };
 
-  // 2. Plugins por defecto
   ["utility", "reminders", "slowmode", "time_and_date", "tags"].forEach(
     (plugin) => {
       if (config.plugins[plugin]) {
@@ -17,7 +15,6 @@ export function generateYaml(config) {
     }
   );
 
-  // 3. Automod con formato especial para reason
   if (config.plugins.automod) {
     yamlObject.plugins.automod = {
       config: {
@@ -36,7 +33,7 @@ export function generateYaml(config) {
               clean: true,
               mute: {
                 duration: "5m",
-                reason: "Auto-muted for spam", // Lo convertiremos después
+                reason: "Auto-muted for spam",
               },
             },
           },
@@ -45,7 +42,6 @@ export function generateYaml(config) {
     };
   }
 
-  // 4. Plugins configurables
   if (config.plugins.common?.success_emoji) {
     yamlObject.plugins.common = {
       config: {
@@ -55,19 +51,16 @@ export function generateYaml(config) {
     };
   }
 
-  // Welcome Message (Configurable)
   if (config.plugins.welcome_message?.config) {
     const welcomeConfig = config.plugins.welcome_message.config;
     yamlObject.plugins.welcome_message = {
       config: {
-        // Incluir send_dm O send_to_channel (siempre)
         ...(welcomeConfig.send_dm !== undefined && {
           send_dm: welcomeConfig.send_dm,
         }),
         ...(welcomeConfig.send_to_channel !== undefined && {
           send_to_channel: welcomeConfig.send_to_channel,
         }),
-        // Mensaje siempre con |- (formato literal block scalar)
         message: `\n${welcomeConfig.message || ""}`,
       },
     };
@@ -87,7 +80,6 @@ export function generateYaml(config) {
     };
   }
 
-  // 5. Moderación
   if (config.plugins.cases?.config?.case_log_channel) {
     yamlObject.plugins.cases = {
       config: {
@@ -100,7 +92,6 @@ export function generateYaml(config) {
     yamlObject.plugins.mod_actions = {
       config: { ...config.plugins.mod_actions.config },
     };
-    // Limpiar campos undefined
     Object.keys(yamlObject.plugins.mod_actions.config).forEach((key) => {
       if (yamlObject.plugins.mod_actions.config[key] === undefined) {
         delete yamlObject.plugins.mod_actions.config[key];
@@ -110,7 +101,6 @@ export function generateYaml(config) {
 
   if (config.plugins.mutes?.config) {
     yamlObject.plugins.mutes = { config: { ...config.plugins.mutes.config } };
-    // Limpiar campos undefined
     Object.keys(yamlObject.plugins.mutes.config).forEach((key) => {
       if (yamlObject.plugins.mutes.config[key] === undefined) {
         delete yamlObject.plugins.mutes.config[key];
@@ -118,7 +108,6 @@ export function generateYaml(config) {
     });
   }
 
-  // 6. Logs
   if (config.plugins.logs?.channels) {
     yamlObject.plugins.logs = { config: { channels: {} } };
     Object.entries(config.plugins.logs.channels).forEach(
@@ -138,16 +127,13 @@ export function generateYaml(config) {
       "!!null": "empty",
       "!!str": {
         defaultType: "PLAIN",
-        // Fuerza comillas solo cuando sea necesario
         quoteSingle: (value) => (value.includes("|-\n") ? false : true),
       },
     },
   });
 
   yamlString = yamlString
-    // Asegurar comillas en reason
     .replace(/reason: (Auto-muted for spam)/g, 'reason: "$1"')
-    // Asegurar formato HEX sin comillas
     .replace(/color: ("?)(0x[0-9A-F]{6})("?)/g, "color: $2");
 
   return yamlString;
